@@ -1,0 +1,29 @@
+@import "../styles.scss";
+
+.app-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  background: radial-gradient(
+    at top left,
+    var(--bg-color-1) 0%,
+    var(--bg-color-1) 30%,
+    var(--bg-color-2) 70%,
+    var(--bg-color-2) 90%
+  );
+
+  .modal-background.active {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(black, 0.3);
+    z-index: 1;
+  }
+}
+
+app-pomodoro-timer {
+  position: relative;
+  z-index: 10;
+}

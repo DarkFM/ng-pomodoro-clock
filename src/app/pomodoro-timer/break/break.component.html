@@ -1,0 +1,16 @@
+<div class="break-settings">
+  <div class="hour-setting">
+    <app-value-toggler
+      [range]="24"
+      [startingValue]="hour"
+      (valueChange)="onHourChange($event)"
+    ></app-value-toggler>
+  </div>
+  <div class="minute-setting">
+    <app-value-toggler
+      [range]="60"
+      [startingValue]="minute"
+      (valueChange)="onMinuteChange($event)"
+    ></app-value-toggler>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<section class="pomodoro-timer">
+  <div class="settings-btn-group">
+    <button class="mode-select" (click)="showSession = true">Session</button>
+    <button class="mode-select" (click)="showSession = false">Break</button>
+  </div>
+  <div class="settings-container">
+    <app-session [style.display]="showSession ? 'block' : 'none'"></app-session>
+    <app-break [style.display]="!showSession ? 'block' : 'none'"></app-break>
+  </div>
+  <div class="start-container">
+    <button class="mode-select" (click)="startTimer()">Start</button>
+  </div>
+  <app-count-down-modal
+    *ngIf="isStarted"
+    [startTime]="isSession ? sessionTime : breakTime"
+    (timerEnded)="handleTimerEnd()"
+  ></app-count-down-modal>
+</section>

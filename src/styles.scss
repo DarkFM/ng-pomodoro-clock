@@ -1,1 +1,36 @@
 /* You can add global styles to this file, and also import other style files */
+/* GLOBAL VARIABLES */
+:root {
+  // used as the color of the box-shadow of all elements
+  --box-shadow: #52649d;
+
+  // used as the bg color for the apps main bg-color
+  --bg-color-2: #2e427d;
+
+  // used for buttons bg colors
+  // used for the apps main bg-color
+  // usde for the small text (MiNUTES, SECONDS, HOURS)
+  --bg-color-1: #778eb8;
+
+  // used as the starting bg-color for the modal
+  --bg-color-modal-1: #6288df;
+
+  // used as the bg-color for the modal
+  // used as the main color for the timer
+  --timer-bg-color: #7774ed;
+
+  // used as the main color for all text
+  --default-txt-color: #eff0fd;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-size: 16px;
+}

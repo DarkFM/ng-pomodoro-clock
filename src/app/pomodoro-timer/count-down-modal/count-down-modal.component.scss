@@ -1,0 +1,12 @@
+.count-down-modal {
+  position: absolute;
+  width: 700px;
+  height: 250px;
+  background: rgba(white, 0.5);
+  color: black;
+  border-radius: 10px;
+  // transform-origin: left;
+  // transform: translateX(-14.29%), translateY();
+  top: 50%;
+  transform: translate(-14.29%, -50%);
+}

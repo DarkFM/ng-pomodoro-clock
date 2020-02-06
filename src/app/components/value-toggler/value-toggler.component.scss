@@ -1,0 +1,15 @@
+.value-toggler {
+  display: inline-flex;
+  flex-flow: column nowrap;
+  height: 100px;
+  min-width: 150px;
+  justify-content: space-between;
+  align-items: center;
+
+  .change-value-btn {
+    // border: none;
+    width: 50px;
+    background: inherit;
+    cursor: pointer;
+  }
+}
