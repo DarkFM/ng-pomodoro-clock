@@ -3,6 +3,7 @@
     <app-value-toggler
       [range]="24"
       [startingValue]="hour"
+      description="hours"
       (valueChange)="onHourChange($event)"
     ></app-value-toggler>
   </div>
@@ -10,6 +11,7 @@
     <app-value-toggler
       [range]="60"
       [startingValue]="minute"
+      description="minutes"
       (valueChange)="onMinuteChange($event)"
     ></app-value-toggler>
   </div>

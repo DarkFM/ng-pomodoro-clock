@@ -1,32 +1,67 @@
+@import "../../styles.scss";
+
 .pomodoro-timer {
   position: relative;
   --width: 500px;
   --height: 400px;
+  font-family: "Play", sans-serif;
   display: inline-flex;
   flex-direction: column;
+  justify-content: space-between;
   width: var(--width);
   height: var(--height);
+  padding: 40px 20px 20px 20px;
   border-radius: 15px;
   background: linear-gradient(
-    -45deg,
-    var(--bg-color-2) 1%,
-    var(--box-shadow) 90%,
-    var(--timer-bg-color) 110%
-  );
+      -45deg,
+      rgba($timer-bg-color, 0.2),
+      rgba($timer-bg-color, 1) 100%
+    ),
+    linear-gradient(
+      120deg,
+      rgba(darken($bg-color-modal-1, 15%), 0),
+      rgba(darken($bg-color-modal-1, 15%), 0.17) 100%
+    );
 
   // will be a global box shadow
-  box-shadow: 0px 0px 20px 5px rgba(black, 0.15);
+  box-shadow: $box-shadow-style;
 
   .settings-btn-group {
     width: 50%;
-    margin: 20px auto;
+    margin: 20px auto 10px auto;
     display: flex;
-    // height: 30px;
-    // border: white solid 1px;
     justify-content: space-between;
+
+    .mode-select {
+      font-size: 24px;
+      border: transparent inset 2px;
+      // background-color: rgba($bg-color-1, 0.1);
+      background-color: inherit;
+      padding: 10px 15px;
+      border-radius: 10px;
+      outline: none;
+      cursor: pointer;
+      transition: border 0.1s ease-in, box-shadow 0.1s ease-in;
+
+      &:hover:not(.active) {
+        // box-shadow: 0px 2px 12px 0px rgba(black, 0.15);
+        box-shadow: 0px 2px 4px -1px rgba(black, 0.15);
+      }
+
+      &.active {
+        box-shadow: 0px -2px 8px 2px rgba(black, 0.15) inset;
+        border: rgba($default-txt-color, 0.25) inset 2px;
+      }
+    }
   }
 
   .settings-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .start-container {
+    width: 100%;
     display: flex;
     justify-content: center;
   }

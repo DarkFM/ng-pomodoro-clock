@@ -1,25 +1,33 @@
 <div class="count-down-modal">
-  <div class="segment">
-    <p>{{ days }}</p>
-    <h4>days</h4>
+  <div class="modal-container">
+    <div class="segment">
+      <p>{{ days }}</p>
+      <h4>days</h4>
+    </div>
+    <span> : </span>
+    <div class="segment">
+      <p>{{ hours }}</p>
+      <h4>hours</h4>
+    </div>
+    <span> : </span>
+    <div class="segment">
+      <p>{{ minutes }}</p>
+      <h4>minutes</h4>
+    </div>
+    <span> : </span>
+    <div class="segment">
+      <p>{{ seconds }}</p>
+      <h4>seconds</h4>
+    </div>
+    <button (click)="handleStartStop()" class="start-stop circular-btn">
+      <i *ngIf="isRunning" class="fas fa-pause"></i>
+      <i *ngIf="!isRunning" class="fas fa-play"></i>
+    </button>
+    <button class="delete" (click)="abortTimer()">
+      <i class="far fa-trash-alt"></i>
+    </button>
+    <button (click)="handleReset()" class="reset circular-btn">
+      <i class="fas fa-redo-alt"></i>
+    </button>
   </div>
-  <span> : </span>
-  <div class="segment">
-    <p>{{ hours }}</p>
-    <h4>hours</h4>
-  </div>
-  <span> : </span>
-  <div class="segment">
-    <p>{{ minutes }}</p>
-    <h4>minutes</h4>
-  </div>
-  <span> : </span>
-  <div class="segment">
-    <p>{{ seconds }}</p>
-    <h4>seconds</h4>
-  </div>
-  <button (click)="handleProgression()" class="start-stop btn">
-    {{ isRunning ? "Pause" : "Resume" }}
-  </button>
-  <button (click)="handleReset()" class="reset btn">Reset</button>
 </div>

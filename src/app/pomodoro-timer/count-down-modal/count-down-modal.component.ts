@@ -14,104 +14,96 @@ export class CountDownModalComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() startTime: Time;
   @Output() timerEnded: EventEmitter<void> = new EventEmitter<void>();
+  @Output() deleteTimer: EventEmitter<void> = new EventEmitter<void>();
 
-  private _days: number;
-  private _hours: number;
-  private _minutes: number;
-  private _seconds: number;
-  private timerId: number;
-  private currentMillisecond: number;
+  // private _days: number;
+  // private _hours: number;
+  // private _minutes: number;
+  // private _seconds: number;
+  private _timerId: number;
+  private _currentMillisecond: number;
 
   get days(): string {
-    return ('00' + this._days).slice(-2);
+    const days = Math.trunc(this._currentMillisecond / (24 * 60 * 60 * 1000));
+    return ('00' + days).slice(-2);
   }
 
   get hours(): string {
-    return ('00' + this._hours).slice(-2);
+    const hours = Math.trunc((this._currentMillisecond / (60 * 60 * 1000)) % 24);
+    return ('00' + hours).slice(-2);
   }
 
   get minutes(): string {
-    return ('00' + this._minutes).slice(-2);
+    const minutes = Math.trunc((this._currentMillisecond / (60 * 1000)) % 60);
+    return ('00' + minutes).slice(-2);
   }
 
   get seconds(): string {
-    return ('00' + this._seconds).slice(-2);
+    const seconds = Math.trunc((this._currentMillisecond / 1000) % 60);
+    return ('00' + seconds).slice(-2);
   }
 
   constructor(private timerService: TimerService) { }
 
   ngOnInit() {
-    this.initTimer();
-    this.startTimer(this.startTime.hour, this.startTime.minute, 0);
+    this.startTimer(this.getTotalMiliseconds(this.startTime.hour, this.startTime.minute));
   }
 
-
   ngOnChanges(changes: SimpleChanges) {
-    if (!changes.startTime.isFirstChange() && (changes.startTime.currentValue !== changes.startTime.previousValue)) {
-      console.log(JSON.stringify(changes))
-      this.initTimer();
-      this.startTimer(this.startTime.hour, this.startTime.minute, 0);
+    if (!changes.startTime.isFirstChange() &&
+      (changes.startTime.currentValue !== changes.startTime.previousValue)) {
+      this._currentMillisecond = 0;
+      this.startTimer(this.getTotalMiliseconds(this.startTime.hour, this.startTime.minute));
     }
   }
 
   ngOnDestroy() {
-    window.clearInterval(this.timerId);
+    window.clearInterval(this._timerId);
   }
 
-  handleProgression() {
+  handleStartStop() {
     if (this.isRunning) {
       this.stopTimer();
     } else {
-      this.startTimer(this._hours, this._minutes, this._seconds);
+      this.startTimer(this._currentMillisecond);
     }
   }
 
   handleReset() {
     this.stopTimer();
-    this.initTimer();
+    this._currentMillisecond = this.getTotalMiliseconds(this.startTime.hour, this.startTime.minute);
   }
 
-  private initTimer() {
-    this._hours = this.startTime.hour;
-    this._minutes = this.startTime.minute;
-    this._seconds = 0;
-    this._days = Math.trunc(this.startTime.hour / 24);
+  abortTimer() {
+    this.deleteTimer.emit();
+  }
+
+  private getTotalMiliseconds(hours: number, minutes: number): number {
+    // convert hours and minutes to milliseconds,
+    // and add the result to get total milliseconds
+    return (hours * 60 * 60 * 1000) + (minutes * 60 * 1000);
   }
 
   private stopTimer() {
     this.isRunning = false;
-    window.clearTimeout(this.timerId);
+    window.clearTimeout(this._timerId);
   }
 
-  private startTimer(hours: number, minutes: number, seconds: number) {
-    // setup before starting timer
-    const time = new Date();
-    const baseLine = time.getTime(); // + 1000; // account for 1 sec dely before start of timer
-    time.setUTCHours(
-      time.getUTCHours() + hours,
-      time.getUTCMinutes() + minutes,
-      time.getUTCSeconds() + seconds
-    );
-    this.currentMillisecond = time.getTime() - baseLine;
-    this.timerId = window.setInterval(this.updateTime.bind(this), 200);
+  private startTimer(milliseconds: number) {
+    // ensures that _milliseconds is set, before this function can be used properly
+    console.log(milliseconds)
+    this._currentMillisecond = milliseconds;
+    this._timerId = window.setInterval(this.updateTime.bind(this), 200);
     this.isRunning = true;
   }
 
   private updateTime() {
-    this.currentMillisecond -= 1000;
-    const newTime = new Date(this.currentMillisecond);
-    this._days = Math.trunc(newTime.getUTCHours() / 24);
-    this._hours = newTime.getUTCHours();
-    this._minutes = newTime.getUTCMinutes();
-    this._seconds = newTime.getUTCSeconds();
+    this._currentMillisecond -= 1000;
 
-    if (this.currentMillisecond <= 0) {
-      window.clearInterval(this.timerId);
+    if (this._currentMillisecond <= 0) {
+      window.clearInterval(this._timerId);
       this.timerEnded.emit();
       return;
     }
-
-    // tail-call recursion
-    // this.timerId = window.setTimeout(() => this.updateTime(milliseconds - 1000), 1000);
   }
 }

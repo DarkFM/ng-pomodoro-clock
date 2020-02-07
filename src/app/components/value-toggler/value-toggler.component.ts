@@ -7,7 +7,9 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class ValueTogglerComponent implements OnInit {
   private count: number;
+
   @Input() range: number;
+  @Input() description: string;
   @Input() startingValue: number;
   @Output() valueChange: EventEmitter<number> = new EventEmitter<number>();
 
@@ -31,7 +33,7 @@ export class ValueTogglerComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.range = this.range || 60;
+    this.range = this.range || 100;
     this.count = this.startingValue;
   }
 

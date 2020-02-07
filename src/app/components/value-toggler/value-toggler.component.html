@@ -1,9 +1,12 @@
 <div class="value-toggler">
-  <button class="change-value-btn" (click)="onIncrement()">
+  <button class="change-value-btn btn-up" (click)="onIncrement()">
     <i class="fas fa-chevron-up"></i>
   </button>
-  <div class="value">{{ value }}</div>
-  <button class="change-value-btn" (click)="onDecrement()">
+  <div class="value">
+    {{ value }}
+    <span>{{ description }}</span>
+  </div>
+  <button class="change-value-btn btn-down" (click)="onDecrement()">
     <i class="fas fa-chevron-down"></i>
   </button>
 </div>

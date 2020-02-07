@@ -1,5 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css?family=Play&display=swap");
+
 /* GLOBAL VARIABLES */
+$box-shadow: #52649d;
+$bg-color-2: #2e427d;
+$bg-color-1: #778eb8;
+$bg-color-modal-1: #6288df;
+$timer-bg-color: #7774ed;
+$default-txt-color: #eff0fd;
+$box-shadow-style: 0px 0px 20px 5px rgba(black, 0.15);
+
 :root {
   // used as the color of the box-shadow of all elements
   --box-shadow: #52649d;
@@ -33,4 +43,50 @@
 
 body {
   font-size: 16px;
+  color: var(--default-txt-color);
+}
+
+.btn {
+  position: relative;
+  z-index: 1;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  border-radius: 5px;
+  padding: 12px 30px;
+  color: $default-txt-color;
+  background: linear-gradient(
+    to bottom,
+    $bg-color-modal-1 30%,
+    darken($bg-color-modal-1, 5%) 80%
+  );
+
+  transform: translateY(0);
+  transition: transform 0.1s linear;
+
+  &:active:hover {
+    transform: translateY(1.5px);
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    border-radius: 5px;
+    z-index: -1;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    opacity: 0;
+    background: linear-gradient(
+      to bottom,
+      $bg-color-modal-1 40%,
+      darken($bg-color-modal-1, 10%) 90%
+    );
+    transition: opacity 0.1s linear;
+  }
+
+  &:hover::after {
+    opacity: 1;
+  }
 }

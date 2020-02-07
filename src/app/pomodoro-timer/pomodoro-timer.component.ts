@@ -20,6 +20,8 @@ export class PomodoroTimerComponent implements OnInit {
     this.showSession = true;
     this.isStarted = false;
     this.isSession = true;
+    // for testing
+    window.setTimeout(() => this.startTimer(), 100);
   }
 
   startTimer() {
@@ -29,8 +31,10 @@ export class PomodoroTimerComponent implements OnInit {
   }
 
   handleTimerEnd() {
-    console.log('timer ended', this.isSession)
     this.isSession = !this.isSession;
-    console.log('timer ended after', this.isSession)
+  }
+
+  handlerTimerDelete() {
+    this.isStarted = false;
   }
 }
