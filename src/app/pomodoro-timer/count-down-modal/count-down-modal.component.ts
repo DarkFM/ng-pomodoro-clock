@@ -21,6 +21,7 @@ import { Time } from 'src/models/Time';
 })
 export class CountDownModalComponent implements OnInit, OnDestroy, OnChanges {
   isRunning: boolean;
+  audioPlaying: boolean;
 
   @ViewChild('showModal', { static: false }) container: ElementRef;
   @Input() startTime: Time;
@@ -107,12 +108,28 @@ export class CountDownModalComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private updateTime() {
-    this._currentMillisecond -= 1000;
-
     if (this._currentMillisecond <= 0) {
       window.clearInterval(this._timerId);
-      this.timerEnded.emit();
+      this.playAudio(() => this.timerEnded.emit());
       return;
     }
+    this._currentMillisecond -= 1000;
+  }
+
+  private playAudio(onAudioEnded: () => void) {
+    const audio = new Audio('https://goo.gl/65cBl1');
+    this.audioPlaying = true;
+
+    audio.onended = (e: Event) => {
+      onAudioEnded();
+      this.audioPlaying = false;
+    };
+
+    audio.onerror = (e: Event) => {
+      onAudioEnded();
+      this.audioPlaying = false;
+      console.error((e.target as HTMLAudioElement).error);
+    };
+    audio.play();
   }
 }

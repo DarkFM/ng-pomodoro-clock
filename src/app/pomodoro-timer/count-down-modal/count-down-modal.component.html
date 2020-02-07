@@ -19,7 +19,12 @@
       <p>{{ seconds }}</p>
       <h4>seconds</h4>
     </div>
-    <button (click)="handleStartStop()" class="start-stop circular-btn">
+    <button
+      [disabled]="audioPlaying"
+      [class.disabled]="audioPlaying"
+      (click)="handleStartStop()"
+      class="start-stop circular-btn"
+    >
       <i *ngIf="isRunning" class="fas fa-pause"></i>
       <i *ngIf="!isRunning" class="fas fa-play"></i>
     </button>

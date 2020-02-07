@@ -29,20 +29,12 @@ export class PomodoroTimerComponent implements OnInit {
   }
 
   handleTimerEnd() {
-    this.playAudio((ev) => this.isSession = !this.isSession);
+    this.isSession = !this.isSession;
   }
 
   handlerTimerDelete() {
     this.isStarted = false;
+    this.isSession = true;
   }
 
-  private playAudio(callback: (ev: Event) => void) {
-    const audio = new Audio('https://goo.gl/65cBl1');
-    const func = (ev: Event) => {
-      audio.removeEventListener('ended', func);
-      callback(ev);
-    };
-    audio.addEventListener('ended', func);
-    audio.play();
-  }
 }
