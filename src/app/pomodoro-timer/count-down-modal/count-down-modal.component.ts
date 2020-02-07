@@ -1,5 +1,16 @@
 // tslint:disable: variable-name
-import { Component, OnInit, Input, OnDestroy, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  OnDestroy,
+  Output,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges,
+  ViewChild,
+  ElementRef
+} from '@angular/core';
 import { TimerService } from 'src/app/timer.service';
 import { Time } from 'src/models/Time';
 
@@ -11,15 +22,11 @@ import { Time } from 'src/models/Time';
 export class CountDownModalComponent implements OnInit, OnDestroy, OnChanges {
   isRunning: boolean;
 
-
+  @ViewChild('showModal', { static: false }) container: ElementRef;
   @Input() startTime: Time;
   @Output() timerEnded: EventEmitter<void> = new EventEmitter<void>();
   @Output() deleteTimer: EventEmitter<void> = new EventEmitter<void>();
 
-  // private _days: number;
-  // private _hours: number;
-  // private _minutes: number;
-  // private _seconds: number;
   private _timerId: number;
   private _currentMillisecond: number;
 
@@ -46,7 +53,10 @@ export class CountDownModalComponent implements OnInit, OnDestroy, OnChanges {
   constructor(private timerService: TimerService) { }
 
   ngOnInit() {
-    this.startTimer(this.getTotalMiliseconds(this.startTime.hour, this.startTime.minute));
+    window.setTimeout(() => {
+      (this.container.nativeElement as HTMLElement).classList.add('show-modal');
+      this.startTimer(this.getTotalMiliseconds(this.startTime.hour, this.startTime.minute));
+    }, 10);
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -91,9 +101,8 @@ export class CountDownModalComponent implements OnInit, OnDestroy, OnChanges {
 
   private startTimer(milliseconds: number) {
     // ensures that _milliseconds is set, before this function can be used properly
-    console.log(milliseconds)
     this._currentMillisecond = milliseconds;
-    this._timerId = window.setInterval(this.updateTime.bind(this), 200);
+    this._timerId = window.setInterval(this.updateTime.bind(this), 1000);
     this.isRunning = true;
   }
 

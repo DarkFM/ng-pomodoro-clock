@@ -28,4 +28,10 @@
     (timerEnded)="handleTimerEnd()"
     (deleteTimer)="handlerTimerDelete()"
   ></app-count-down-modal>
+
+  <div *ngIf="isStarted" class="modal-cover">
+    <h1 class="title" [title]="isSession ? 'Study Hard' : 'Break Time'">
+      {{ isSession ? "Study Hard" : "Break Time" }}
+    </h1>
+  </div>
 </section>
