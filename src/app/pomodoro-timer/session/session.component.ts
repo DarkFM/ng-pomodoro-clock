@@ -15,7 +15,7 @@ export class SessionComponent implements OnInit {
 
   ngOnInit() {
     this.hour = 0;
-    this.minute = 1;
+    this.minute = 25;
     this.updateService();
   }
 
